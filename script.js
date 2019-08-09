@@ -110,7 +110,7 @@ function downloadFile(url, filename) {
 
       function alter() { //call the  python script, then change the callback to post
         console.log("altering right now");
-        var cmd = "python script.py";
+        var cmd = "py -3.6 script.py";
         exec(cmd, post);
       }
 
