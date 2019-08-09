@@ -45,7 +45,8 @@ function checkHashtag() {
       var reply_to = all_tweets[i].in_reply_to_screen_name;
       var name = all_tweets[i].user.screen_name;
       var id = all_tweets[i].id_str;
-
+      //get the location of the tweet
+      var loc = all_tweets[i].location;
 
 
       //gets the previous tweet data
@@ -129,13 +130,33 @@ function downloadFile(url, filename) {
           // Now we can reference the media and post a tweet
           // with the media attached
           var mediaIdStr = data.media_id_string;
-          var content = getAllContent()
-          var params = {
+          var content = getAllContent();
+          var faceInfo = getFaceInfo();
+/*          var params = {
               status: 'here is the image with glasses @' + content.data.name,
               in_reply_to_status_id: content.data.id,
               media_ids: [mediaIdStr]
             }
-            // Post tweet
+*/
+          var params;
+          
+          //Tweets the location of the person as well as whether they are smiling or not
+          if (faceInfo.isSmiling == "true") {
+            params = {
+              status: "You are smiling at " + content.data.loc,
+              in_reply_to_status_id: content.data.id,
+              media_ids: [mediaIdStr]
+            }
+          }
+          else {
+            params = {
+              status: "You are not smiling at " + content.data.loc,
+              in_reply_to_status_id: content.data.id,
+              media_ids: [mediaIdStr]
+            }
+          }
+
+          //Post tweet
           T.post('statuses/update', params, tweeted);
 
           remove(); //remove the image stored
@@ -147,6 +168,12 @@ function downloadFile(url, filename) {
       };
     }
 
+}
+
+function getFaceInfo(){
+  //get data from json file about the face/mouth
+  var contents = fs.readFileSync("faceData.json");
+  return JSON.parse(contents);
 }
 
 function tweeted(err, success) { //callback for posting
