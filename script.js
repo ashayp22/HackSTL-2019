@@ -31,11 +31,11 @@ Sentencer.configure({
 
 });
 
+var jokeMaker = require("give-me-a-joke");
+
 // T.post('statuses/update', { status: 'hello world!' }, function(err, data, response) {
 //   console.log(data)
 // })
-
-
 
 
 //every 2 minutes, sees if someone retweetwed your tweet
@@ -182,8 +182,12 @@ function downloadFile(url, filename) {
             console.log("is grinning")
             var adj = Sentencer.make("{{ an_adjective }}");
             var noun = Sentencer.make("{{ noun }}");
+            var j;
+            jokeMaker.getRandomDadJoke(function(joke){
+              j = joke;
+            })
             params = {
-              status: "You are grinning @" + content.data.name + ". You look like " + adj + " " + noun,
+              status: "You are grinning @" + content.data.name + ". You look like " + adj + " " + noun + ". " + joke,
               in_reply_to_status_id: content.data.id,
               media_ids: [mediaIdStr]
             }
