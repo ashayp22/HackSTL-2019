@@ -1,0 +1,27 @@
+{
+  "name": "smileai",
+  "version": "1.0.0",
+  "description": "twitter bot that detects smiles",
+  "main": "script.js",
+  "scripts": {
+    "start": "node script.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "yo"
+  ],
+  "author": "Ashay Parikh",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "child_process": "^1.0.2",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "give-me-a-joke": "^0.1.2",
+    "one-liner-joke": "^1.2.0",
+    "python-shell": "^1.0.8",
+    "request": "^2.88.0",
+    "sentencer": "^0.2.0",
+    "twit": "^2.2.11"
+  }
+}
