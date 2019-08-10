@@ -33,7 +33,7 @@ setInterval(checkHashtag, 1000*60*2*1);
 
 function checkHashtag() {
   var params = {
-    q: "#hackstlsmileai since:2019-8-1",
+    q: "#hackstlgrinai since:2019-8-1",
     count: 1
   }
 
@@ -162,7 +162,7 @@ function downloadFile(url, filename) {
           if (faceInfo.isSmiling == "0") {
             console.log("not grinning")
             params = {
-              status: "You are not grinning",
+              status: "You are not grinning @" + content.data.name,
               in_reply_to_status_id: content.data.id,
               media_ids: [mediaIdStr]
             }
@@ -170,7 +170,7 @@ function downloadFile(url, filename) {
           else {
             console.log("is grinning")
             params = {
-              status: "You are grinning",
+              status: "You are grinning @" + content.data.name,
               in_reply_to_status_id: content.data.id,
               media_ids: [mediaIdStr]
             }
