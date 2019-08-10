@@ -1,3 +1,4 @@
+console.log("hello world");
 console.log("working");
 
 var Twit = require("twit");
@@ -16,15 +17,23 @@ var request = require('request');
 // Require child_process for triggering script for python
 var exec = require('child_process').exec;
 
-var twitter_handler = "";
+var twitter_handler = "SmileAI10";
 
-//every 60 seconds, sees if someone retweetwed your tweet
 
-setInterval(checkHashtag, 1000*60*0.5*1);
+// T.post('statuses/update', { status: 'hello world!' }, function(err, data, response) {
+//   console.log(data)
+// })
+
+
+
+
+//every 2 minutes, sees if someone retweetwed your tweet
+
+setInterval(checkHashtag, 1000*60*2*1);
 
 function checkHashtag() {
   var params = {
-    q: "#twitterfacebot since:2019-7-1",
+    q: "#hackstlsmileai since:2019-8-1",
     count: 1
   }
 
@@ -33,6 +42,15 @@ function checkHashtag() {
   function gotData(err, data, response) {
 
     var all_tweets = data.statuses;
+
+    console.log("here starting")
+
+    console.log(all_tweets)
+
+    if(all_tweets == undefined) {
+      console.log("no tweets, undefined");
+      return;
+    }
 
     for(var i = 0; i < all_tweets.length; i++) {
 
@@ -104,7 +122,7 @@ function downloadFile(url, filename) {
 
       // Now save it to disk with that filename
       // Put it in the folder
-      request(url).pipe(fs.createWriteStream('images/' + filename)).on('close', alter);
+      request(url).pipe(fs.createWriteStream(filename)).on('close', alter);
 
       //now we alter the image
 
@@ -117,7 +135,7 @@ function downloadFile(url, filename) {
       //now we tweet the image
 
       function post(err, stdout, stderr) {
-        var b64content = fs.readFileSync('images/' + filename, {
+        var b64content = fs.readFileSync(filename, {
             encoding: 'base64'
         })
 
@@ -139,18 +157,20 @@ function downloadFile(url, filename) {
             }
 */
           var params;
-          
+
           //Tweets the location of the person as well as whether they are smiling or not
-          if (faceInfo.isSmiling == "true") {
+          if (faceInfo.isSmiling == "0") {
+            console.log("not grinning")
             params = {
-              status: "You are smiling at " + content.data.loc,
+              status: "You are not grinning",
               in_reply_to_status_id: content.data.id,
               media_ids: [mediaIdStr]
             }
           }
           else {
+            console.log("is grinning")
             params = {
-              status: "You are not smiling at " + content.data.loc,
+              status: "You are grinning",
               in_reply_to_status_id: content.data.id,
               media_ids: [mediaIdStr]
             }
@@ -164,7 +184,7 @@ function downloadFile(url, filename) {
       }
 
       function remove() { //Now we remove it
-        fs.unlinkSync('images/' + filename);
+        fs.unlinkSync(filename);
       };
     }
 
@@ -172,7 +192,7 @@ function downloadFile(url, filename) {
 
 function getFaceInfo(){
   //get data from json file about the face/mouth
-  var contents = fs.readFileSync("faceData.json");
+  var contents = fs.readFileSync("smiling.json");
   return JSON.parse(contents);
 }
 
