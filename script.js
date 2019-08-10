@@ -20,6 +20,17 @@ var exec = require('child_process').exec;
 var twitter_handler = "SmileAI10";
 
 
+var Sentencer = require("sentencer");
+
+Sentencer.configure({
+  // the list of nouns to use
+  nounList: ["flower", "orchid", "puppy", "pickle", "flute", "student"],
+
+  // the list of adjectives to use
+  adjectiveList: ["happy", "ecstatic", "overjoyed", "beaming", "gleeful", "cheery", "delighted", "joyful"]
+
+});
+
 // T.post('statuses/update', { status: 'hello world!' }, function(err, data, response) {
 //   console.log(data)
 // })
@@ -158,19 +169,21 @@ function downloadFile(url, filename) {
 */
           var params;
 
-          //Tweets the location of the person as well as whether they are smiling or not
+          //Tweets whether they are smiling or not
           if (faceInfo.isSmiling == "0") {
             console.log("not grinning")
             params = {
-              status: "You are not grinning @" + content.data.name,
+              status: "You are not grinning @" + content.data.name + ". Cheer up, grin some more!",
               in_reply_to_status_id: content.data.id,
               media_ids: [mediaIdStr]
             }
           }
           else {
             console.log("is grinning")
+            var adj = Sentencer.make("{{ an_adjective }}");
+            var noun = Sentencer.make("{{ noun }}");
             params = {
-              status: "You are grinning @" + content.data.name,
+              status: "You are grinning @" + content.data.name + ". You look like " + adj + " " + noun,
               in_reply_to_status_id: content.data.id,
               media_ids: [mediaIdStr]
             }
