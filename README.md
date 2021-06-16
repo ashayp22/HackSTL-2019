@@ -10,11 +10,6 @@ GrinAI is a full deep learning pipeline that classifies grins on a face. This mo
 
 This project was submitted to HackSTL 2019 in August 2019, which was a hackathon hosted at the Schamburg Township Library for 2 days or 21 hours.
 
-## Links
-
-* [Check out the site in action](https://health-desk.herokuapp.com/)
-* [Watch the demonstration video](https://youtu.be/EqEYL4vCNPE)
-* [See the project submission on Devpost](https://devpost.com/software/healthdesk-mfj2hr)
 
 ## Technologies
 
